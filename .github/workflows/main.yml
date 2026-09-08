@@ -25,12 +25,12 @@ jobs:
         
 # Validates all of the Data Factory resources in the repository. You'll get the same validation errors as when "Validate All" is selected.
     - name: Validate
-      run: npm run build validate ${{github.workspace}}/ /subscriptions/<<yourSubscriptionID>>/resourceGroups/<<yourResourceGroup>>/providers/Microsoft.DataFactory/factories/<<dataFactoryName>> # (2) The validate command needs the root folder location of your repository where all the objects are stored. And the 2nd parameter is the resourceID of the ADF instance 
+      run: npm run build validate ${{github.workspace}}/ /subscriptions/313696f4-e85f-44fa-8020-b7183304c11c/resourceGroups/rg_dev2026v1/providers/Microsoft.DataFactory/factories/adfdev2026v1 # (2) The validate command needs the root folder location of your repository where all the objects are stored. And the 2nd parameter is the resourceID of the ADF instance 
       working-directory: ${{github.workspace}}/build
  
 
     - name: Validate and Generate ARM template
-      run: npm run build export ${{github.workspace}}/ /subscriptions/<<yourSubscriptionID>>/resourceGroups/<<yourResourceGroup>>/providers/Microsoft.DataFactory/factories/<<dataFactoryName>> "ExportedArmTemplate"  # (3) The build command, as validate, needs the root folder location of your repository where all the objects are stored. And the 2nd parameter is the resourceID of the ADF instance. The 3rd parameter is the exported ARM template artifact name 
+      run: npm run build export ${{github.workspace}}/ /subscriptions/313696f4-e85f-44fa-8020-b7183304c11c/resourceGroups/rg_dev2026v1/providers/Microsoft.DataFactory/factories/adfdev2026v1 "ExportedArmTemplate"  # (3) The build command, as validate, needs the root folder location of your repository where all the objects are stored. And the 2nd parameter is the resourceID of the ADF instance. The 3rd parameter is the exported ARM template artifact name 
       working-directory: ${{github.workspace}}/build
  
 # In order to leverage the artifact in another job, we need to upload it with the upload action 
@@ -63,8 +63,8 @@ jobs:
       - name: data-factory-deploy
         uses: Azure/data-factory-deploy-action@v1.2.0
         with:
-          resourceGroupName: #TargetResourceGroup
-          dataFactoryName: #targetADF
+          resourceGroupName: rg_prod2026v1
+          dataFactoryName: adfprod2026v1
           armTemplateFile: ARMTemplateForFactory.json
           armTemplateParametersFile: ARMTemplateParametersForFactory.json
           #additionalParameters: # (10) Parameters which will be replaced in the ARM template. Expected format 'key1=value key2=value keyN=value'. At the minimum here you should provide the target ADF name parameter. Check the ARMTemplateParametersForFactory.json file for all the parameters that are expected in your scenario
